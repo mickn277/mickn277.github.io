@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finance Overview</title>
+
+<!-- <link rel="stylesheet" type="text/css" href="css/style.css"> -->
+<!-- bootstrap -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<!-- /bootstrap -->
+<!-- tradingview api -->
+<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+<!-- /tradingview api -->
+<!-- custom style -->
+<style type="text/css">
+    body{FONT-FAMILY: Tahoma,Verdana, Helvetica, sans-serif;}
+    a{color : Blue; font-weight: bold; padding-top: 2pt; padding-right : 2pt; padding-top : 2pt; padding-bottom : 2pt;}
+    a:hover{background-color: Blue; color: White;}
+    h1{font-size: large; font-weight: bolder;}
+    h1.title{color: white; background-color: blueviolet; padding-top: .7rem; padding-bottom: .7rem;}
+    h2{font-size: medium; font-weight: bolder;} 
+    h2.title{color: white; background-color: blue; padding-top: .5rem; padding-bottom: .5rem;}
+    h3{font-size: small; font-weight: bolder;} 
+    h3.title{color: red; text-align: center;}
+    div.footer {align-content:center; font-size : x-small;}
+    p{font-size: x-small; font-weight: bold;}
+</style>
+<!-- /custom style -->
+</head>
+
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 col-sm-12">
+            <h1 class="text-center title">Aussie Finance</h1>
+        </div>
+    </div>
+
+    <div class="row row-no-gutters">
+        <div class="col-lg-12 col-sm-12">
+            <h2 class="text-center title">Precious Metals in AUD</h2>
+        </div>  
+        <div class="col-xl-2 col-sm-4 col-6">
+            <A HREF="http://www.kitco.com/connecting.html"><IMG SRC="http://www.kitconet.com/charts/metals/gold/t24_au_en_usoz_2.gif" BORDER="0" ALT="[Most Recent Quotes from www.kitco.com]"></A>
+            <p>
+                <a href="https://stockcharts.com/h-sc/ui?s=$GOLD">Stockcharts $GOLD</a><br>
+                <a href="https://stockcharts.com/h-sc/ui?s=$GOLD:$SILVER">Stockcharts $GOLD:$SILVER</a><br>
+                <a href="https://stockcharts.com/h-sc/ui?s=$GOLD:$PLAT">Stockcharts $GOLD:$PLAT</a><br>
+                <a href="https://stockcharts.com/h-sc/ui?s=$GOLD:$PALL">Stockcharts $GOLD:$PALL</a><br>
+            </p>
+        </div>        
+        <div class="col-xl-2 col-sm-4 col-6">
+            <A HREF="http://www.kitco.com/connecting.html"><IMG SRC="http://kitconet.com/charts/metals/gold/t24_au_en_auoz_2.gif" BORDER="0" ALT="[Most Recent Quotes from www.kitco.com]" height="114px" width="172px"></A>
+            <p>
+                <a href="https://stockcharts.com/h-sc/ui?s=$GOLD:$XAD">Stockcharts $GOLD:$XAD</a><br>
+            </p>
+        </div>
+        <div class="col-xl-2 col-sm-4 col-6">
+            <A HREF="http://www.kitco.com/connecting.html"><IMG SRC="http://kitconet.com/charts/metals/silver/t24_ag_en_auoz_2.gif" BORDER="0" ALT="[Most Recent Quotes from www.kitco.com]" height="114px" width="172px"></A>
+            <p>
+                <a href="https://stockcharts.com/h-sc/ui?s=$SILVER">Stockcharts $SILVER</a><br>
+	            <a href="https://stockcharts.com/h-sc/ui?s=$SILVER:$XAD">Stockcharts $SILVER:$XAD</a><br>
+			    <a href="https://stockcharts.com/h-sc/ui?s=$SILVER:$PLAT">Stockcharts $SILVER:$PLAT</a><br>
+			    <a href="https://stockcharts.com/h-sc/ui?s=$PLAT:$PALL">Stockcharts $SILVER:$PALL</a><br>
+            </p>
+        </div>
+        <div class="col-xl-2 col-sm-4 col-6">
+            <A HREF="http://www.kitco.com/connecting.html"><IMG SRC="http://kitconet.com/charts/metals/platinum/t24_pt_en_auoz_2.gif" BORDER="0" ALT="[Most Recent Quotes from www.kitco.com]" height="114px" width="172px"></A>
+            <p>
+                <a href="https://stockcharts.com/h-sc/ui?s=$PLAT">Stockcharts $PLAT</a><br>
+	            <a href="https://stockcharts.com/h-sc/ui?s=$PLAT:$XAD">Stockcharts $PLAT:$XAD</a><br>
+			    <a href="https://stockcharts.com/h-sc/ui?s=$PLAT:$PALL">Stockcharts $PLAT:$PALL</a><br>
+            </p>
+        </div>
+        <div class="col-xl-2 col-sm-4 col-6">
+            <A HREF="http://www.kitco.com/connecting.html"><IMG SRC="http://kitconet.com/charts/metals/palladium/t24_pd_en_auoz_2.gif" BORDER="0" ALT="[Most Recent Quotes from www.kitco.com]" height="114px" width="172px"></A>
+            <p>
+                <a href="https://stockcharts.com/h-sc/ui?s=$PALL">Stockcharts $PALL</a><br>
+                <a href="https://stockcharts.com/h-sc/ui?s=$PALL:$XAD">Stockcharts $PALL:$XAD</a><br>
+            </p>
+        </div>
+        <div class="col-xl-2 col-sm-4 col-6">
+            <A HREF="http://www.kitco.com/connecting.html"><IMG SRC="http://www.kitco.com/LFgif/rh0030lns.gif" width="172px" height="114px" BORDER="0" ALT="[Most Recent Quotes from www.kitco.com]" height="114px" width="172px"></A>
+            <p>
+                <a href="http://www.kitco.com/charts/rhodium.html">Kitco Rhodium</a><br>
+            </p>
+        </div>
+    </div>
+
+
+    <div class="row row-no-gutters">
+        <div class="col-lg-12 col-sm-12">
+            <h2 id="what-is-buildbootstrap-">What is BuildBootstrap?</h2>
+            <p>BuildBootstrap is a free online tool helping with common task of creating responsive layout utilizing Bootstrap 3 or latest Bootstrap 4 grid system.</p>
+        </div>
+        <div class="col-xl-2 col-sm-4">
+            <h2 id="what-is-buildbootstrap-">What is BuildBootstrap?</h2>
+            <p>BuildBootstrap is a free online tool helping with common task of creating responsive layout utilizing Bootstrap 3 or latest Bootstrap 4 grid system.</p>
+        </div>
+        <div class="col-xl-2 col-sm-4">
+            <h2 id="what-is-buildbootstrap-">What is BuildBootstrap?</h2>
+            <p>BuildBootstrap is a free online tool helping with common task of creating responsive layout utilizing Bootstrap 3 or latest Bootstrap 4 grid system.</p>
+        </div>
+        <div class="col-xl-2 col-sm-4">
+            <h2 id="what-is-buildbootstrap-">What is BuildBootstrap?</h2>
+            <p>BuildBootstrap is a free online tool helping with common task of creating responsive layout utilizing Bootstrap 3 or latest Bootstrap 4 grid system.</p>
+        </div>
+        <div class="col-xl-2 col-sm-4">
+            <h2 id="what-is-buildbootstrap-">What is BuildBootstrap?</h2>
+            <p>BuildBootstrap is a free online tool helping with common task of creating responsive layout utilizing Bootstrap 3 or latest Bootstrap 4 grid system.</p>
+        </div>
+        <div class="col-xl-2 col-sm-4">
+            <h2 id="what-is-buildbootstrap-">What is BuildBootstrap?</h2>
+            <p>BuildBootstrap is a free online tool helping with common task of creating responsive layout utilizing Bootstrap 3 or latest Bootstrap 4 grid system.</p>
+        </div>
+        <div class="col-xl-2 col-sm-4">
+            <h2 id="what-is-buildbootstrap-">What is BuildBootstrap?</h2>
+            <p>BuildBootstrap is a free online tool helping with common task of creating responsive layout utilizing Bootstrap 3 or latest Bootstrap 4 grid system.</p>
+        </div>              
+    </div>
+
+
+
+    <div class="row row-no-gutters">
+        <div class="col-xl-3 col-sm-6">
+            <h3 class="title">title here</h3>
+            <!-- TradingView Widget BEGIN -->
+            <div class="tradingview-widget-container">
+                <div id="tradingview_3_1"></div>
+                <script type="text/javascript">
+                new TradingView.widget({
+                "width": 240,
+                "height": 120,
+                "symbol": "NASDAQ:AAPL",
+                "interval": "30",
+                "timezone": "Australia/Brisbane",
+                "theme": "Light",
+                "style": "1",
+                "locale": "en",
+                "toolbar_bg": "#f1f3f6",
+                "enable_publishing": false,
+                "hide_top_toolbar": true,
+                "hide_legend": true,
+                "save_image": false,
+                "show_popup_button": false,
+                "popup_width": "1000",
+                "popup_height": "650",
+                "container_id": "tradingview_3_1"});
+                </script>
+            </div>
+            <!-- TradingView Widget END -->
+            <p>BuildBootstrap is a free online tool.</p>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+            <h3 class="title">title here</h3>
+            <!-- TradingView Widget BEGIN -->
+            <div class="tradingview-widget-container">
+                <div id="tradingview_3_2"></div>
+                <script type="text/javascript">
+                new TradingView.widget({
+                "width": 240,
+                "height": 120,
+                "symbol": "NASDAQ:AAPL",
+                "interval": "30",
+                "timezone": "Australia/Brisbane",
+                "theme": "Light",
+                "style": "1",
+                "locale": "en",
+                "toolbar_bg": "#f1f3f6",
+                "enable_publishing": false,
+                "hide_top_toolbar": true,
+                "hide_legend": true,
+                "save_image": false,
+                "show_popup_button": false,
+                "popup_width": "1000",
+                "popup_height": "650",
+                "container_id": "tradingview_3_2"});
+                </script>
+            </div>
+            <!-- TradingView Widget END -->
+            <p>BuildBootstrap is a free online tool.</p>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+            <h3 class="title">title here</h3>
+            <!-- TradingView Widget BEGIN -->
+            <div class="tradingview-widget-container">
+                <div id="tradingview_3_3"></div>
+                <script type="text/javascript">
+                new TradingView.widget({
+                "width": 240,
+                "height": 120,
+                "symbol": "NASDAQ:AAPL",
+                "interval": "30",
+                "timezone": "Australia/Brisbane",
+                "theme": "Light",
+                "style": "1",
+                "locale": "en",
+                "toolbar_bg": "#f1f3f6",
+                "enable_publishing": false,
+                "hide_top_toolbar": true,
+                "hide_legend": true,
+                "save_image": false,
+                "show_popup_button": false,
+                "popup_width": "1000",
+                "popup_height": "650",
+                "container_id": "tradingview_3_3"});
+                </script>
+            </div>
+            <!-- TradingView Widget END -->
+            <p>BuildBootstrap is a free online tool.</p>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+            <h3 class="title">title here</h3>
+            <!-- TradingView Widget BEGIN -->
+            <div class="tradingview-widget-container">
+                <div id="tradingview_3_4"></div>
+                <script type="text/javascript">
+                new TradingView.widget({
+                "width": 240,
+                "height": 120,
+                "symbol": "NASDAQ:AAPL",
+                "interval": "30",
+                "timezone": "Australia/Brisbane",
+                "theme": "Light",
+                "style": "1",
+                "locale": "en",
+                "toolbar_bg": "#f1f3f6",
+                "enable_publishing": false,
+                "hide_top_toolbar": true,
+                "hide_legend": true,
+                "save_image": false,
+                "show_popup_button": false,
+                "popup_width": "1000",
+                "popup_height": "650",
+                "container_id": "tradingview_3_4"});
+                </script>
+            </div>
+            <!-- TradingView Widget END -->
+            <p>BuildBootstrap is a free online tool.</p>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

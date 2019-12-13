@@ -428,7 +428,7 @@
             <h2 class="text-center title">Americas Stock Markets</h2>
         </div> 
         <div class="col-xl-3 col-sm-6">
-            <h3 class="title">All Ordinaries (Aus)</h3>
+            <h3 class="title">S&P 500 Index [ETF] (US)</h3>
             <!-- TradingView Widget BEGIN -->
             <div class="tradingview-widget-container">
                 <div id="tradingview_3_1"></div>
@@ -436,7 +436,7 @@
                 new TradingView.widget({
                 "width": 260,
                 "height": 130,
-                "symbol": "ASX:XAO",
+                "symbol": "AMEX:SPY",
                 "interval": "30",
                 "timezone": "Australia/Brisbane",
                 "theme": "Light",
@@ -454,10 +454,12 @@
                 </script>
             </div>
             <!-- TradingView Widget END -->
-            <p>BuildBootstrap is a free online tool.</p>
+            <p>
+              <a href="https://www.tradingview.com/symbols/SPX/">TradingView S&P 500 Index</a><br>
+            </p>
         </div>
         <div class="col-xl-3 col-sm-6">
-            <h3 class="title">Nikkei 225 Ix (Japan)</h3>
+            <h3 class="title">Dow Jones Industrial Ix (US)</h3>
             <!-- TradingView Widget BEGIN -->
             <div class="tradingview-widget-container">
                 <div id="tradingview_3_2"></div>
@@ -465,7 +467,7 @@
                 new TradingView.widget({
                 "width": 260,
                 "height": 130,
-                "symbol": "INDEX:NKY",
+                "symbol": "AMEX:DIA",
                 "interval": "30",
                 "timezone": "Australia/Brisbane",
                 "theme": "Light",
@@ -483,7 +485,9 @@
                 </script>
             </div>
             <!-- TradingView Widget END -->
-            <p>BuildBootstrap is a free online tool.</p>
+            <p>
+              <a href="https://www.tradingview.com/symbols/DJ-DJI/">TradingView DJI Index</a><br>
+            </p>
         </div>
         <div class="col-xl-3 col-sm-6">
             <h3 class="title">Hang Seng Ix (Hong Kong)</h3>
@@ -545,6 +549,8 @@
         </div>
     </div>
     <!-- /Americas -->
+
+    <p>NOTE: ETF's or CFD's are used where TradingView blocks the symbol from being used in their widget, see [EFF] against the name.</p>
 
 </div>
 </body>

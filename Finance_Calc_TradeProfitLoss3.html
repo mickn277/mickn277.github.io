@@ -1,0 +1,266 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+<title>Trade Profit/Loss Calculator 3</title>
+<LINK rel="stylesheet" href="styles/default.css" type="text/css">
+<style type="text/css">
+<!--
+td.Caption{
+	/* font-size: x-small; */
+	font-size: 14px;
+	background-color: Silver;
+}
+.Message{
+	font-size: x-small;
+	font-weight: bold;
+	color: Red;
+}
+.Output{
+	background-color: Silver;
+	color: Black;
+}
+-->
+</style>
+<script language="JavaScript1.2" src="scripts/Cookies.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+
+var CookieTitle='TradeCalc03';
+
+function Calculate(){
+	var vBuyPrice=parseFloat(document.forms[0].tbxBuyPrice.value);
+	var vBuyExpence=parseFloat(document.forms[0].tbxBuyExpences.value);
+	var bBuyIsPercentage=parseFloat(document.forms[0].cboBuyExpenceInDollars.options[document.forms[0].cboBuyExpenceInDollars.selectedIndex].value);
+	var vNoUnits=parseFloat(document.forms[0].tbxNumberOfUnits.value);
+	var vSellPrice=parseFloat(document.forms[0].tbxSellPrice.value);
+	var vSellExpence=parseFloat(document.forms[0].tbxSellExpences.value);
+	var bSellIsPercentage=parseFloat(document.forms[0].cboSellExpenceInDollars.options[document.forms[0].cboSellExpenceInDollars.selectedIndex].value);
+	
+	//Clear the messages
+	document.getElementById("Message").innerHTML="";
+
+	//Validate data entry
+	//TODO: Doesn't work correctly
+	if(vBuyPrice=="NaN"||!vBuyPrice>0){
+		AppendMessage("Buy price must be a number greater than zero !");
+		vBuyPrice=0;
+	}
+	if(vNoUnits=="NaN"||!vNoUnits>0){
+		AppendMessage("Number/Amount must be a number greater than zero !");
+		vNoUnits=0;
+	}
+	if(vBuyExpence=="NaN"||!vBuyExpence<0){	
+		AppendMessage("Buy expence must be a number greater than or equal to zero !");
+		vBuyExpence=0;
+	}
+	if(vSellPrice=="NaN"||!vSellPrice>0){
+		AppendMessage("Sell price must be a number greater than zero !");
+		vSellPrice=0;
+	}
+	if(vSellExpence=="NaN"||!vSellExpence<0){	
+		AppendMessage("Sell expence must be a number greater than or equal to zero !");
+		vSellExpence=0;
+	}
+
+	//Calculate the results
+	document.forms[0].tbxTotalInvested.value=formatFloat(CalculateTotalInvested(vBuyPrice, vNoUnits, vBuyExpence, bBuyIsPercentage),2);
+	document.forms[0].tbxBreakEven.value=formatFloat(CalculateBreakEven(vBuyPrice, vNoUnits, vBuyExpence, bBuyIsPercentage, vSellExpence, bSellIsPercentage),4);
+	document.forms[0].tbxTotalReturn.value=formatFloat(CalculateTotalReturn(vSellPrice, vNoUnits, vSellExpence, bSellIsPercentage),2);
+	document.forms[0].tbxProfitLossDollars.value=formatFloat(CalculateProfitLossDollars(vBuyPrice, vNoUnits, vBuyExpence, bBuyIsPercentage, vSellPrice, vSellExpence, bSellIsPercentage),2);
+	document.forms[0].tbxProfitLossPercent.value=formatFloat(CalculateProfitLossPercentage(vBuyPrice, vNoUnits, vBuyExpence, bBuyIsPercentage, vSellPrice, vSellExpence, bSellIsPercentage),3);
+	
+	//Set the Textbox ProfitLoss colours
+	var eProfitLossDollars=document.getElementById("tbxProfitLossDollars").style;
+	var eProfitLossPercent=document.getElementById("tbxProfitLossPercent").style;
+	if(eProfitLossDollars&&eProfitLossPercent){
+		if(parseFloat(document.forms[0].tbxProfitLossPercent.value)>0){
+			eProfitLossDollars.backgroundColor="Green";
+			eProfitLossDollars.color="White";
+			eProfitLossPercent.backgroundColor="Green";
+			eProfitLossPercent.color="White";
+		}else if(parseFloat(document.forms[0].tbxProfitLossPercent.value)<0){
+			eProfitLossDollars.backgroundColor="Red";
+			eProfitLossDollars.color="White";
+			eProfitLossPercent.backgroundColor="Red";
+			eProfitLossPercent.color="White";
+		}else{
+			eProfitLossDollars.backgroundColor="Silver";
+			eProfitLossDollars.color="Black";
+			eProfitLossPercent.backgroundColor="Silver";
+			eProfitLossPercent.color="Black";
+		}
+	}
+}
+/*Purpose:
+ * Format the float number to the specified Number of decimal places
+ */
+function formatFloat(vFloatValue, vNoDecimals){
+	return Math.round(vFloatValue*Math.pow(10,vNoDecimals))/Math.pow(10,vNoDecimals);
+}
+/*Purpose:
+ * Return the Total Invested in Dollars
+ */
+function CalculateTotalInvested(vBuyPrice, vNoUnits, vBuyExpence, bBuyIsPercentage){
+	return (vBuyPrice*vNoUnits)+CalculateExpences(vBuyPrice, vNoUnits, vBuyExpence, bBuyIsPercentage);
+}
+/*Purpose:
+ * Return the Total Invested in Dollars
+ */
+function CalculateTotalReturn(vSellPrice, vNoUnits, vSellExpence, bSellIsPercentage){
+	return (vSellPrice*vNoUnits)-CalculateExpences(vSellPrice, vNoUnits, vSellExpence, bSellIsPercentage);
+}
+/*Purpose:
+ * Return the expence amount in dollars.
+ */
+function CalculateExpences(vPrice, vNoUnits, vExpence, bIsPercentage){
+	if(bIsPercentage!=0){ //Percentage
+		return (vPrice*vNoUnits)*(vExpence*0.01);
+	}else{ //Dollars
+		return vExpence;
+	}
+}
+
+function CalculateBreakEven(vBuyPrice, vNoUnits, vBuyExpence, bBuyIsPercentage, vSellExpence, bSellIsPercentage){
+	var vBreakEvenPrice=0;
+	/* Algorithms: 
+	 * 1: BE=% && SE=% : BreakEvenPrice=(100+BuyExpence%)*BuyPrice/(100-SellExpence%);
+	 * 2: BE=$ && SE=% : BreakEvenPrice=(100*((BuyPrice*NoUnits)+BuyExpence$))/(NoUnits*(100-SellExpence%));
+	 * 3: BE=% && SE=$ : BreakEvenPrice=BuyPrice+(BuyPrice*BuyExpence%/100)+SellExpence$/NoUnits;
+	 * 4: BE=$ && SE=$ : BreakEvenPrice=BuyPrice+(BuyExpence$/NoUnits)+(SellExpence$/NoUnits);
+	 */
+	if(bBuyIsPercentage!=0 && bSellIsPercentage!=0){
+		vBreakEvenPrice=(100+vBuyExpence)*vBuyPrice/(100-vSellExpence);
+		//AppendMessage("1: BE% SE%");
+	}else if(bBuyIsPercentage==0 && bSellIsPercentage!=0){
+		vBreakEvenPrice=(100*((vBuyPrice*vNoUnits)+vBuyExpence))/(vNoUnits*(100-vSellExpence));
+		//AppendMessage("2: BE$ SE%"); 
+	}else if(bBuyIsPercentage!=0 && bSellIsPercentage==0){
+		vBreakEvenPrice=vBuyPrice+(vBuyPrice*vBuyExpence/100)+vSellExpence/vNoUnits;
+		//AppendMessage("3: BE% SE$");
+	}else if(bBuyIsPercentage==0 && bSellIsPercentage==0){
+		vBreakEvenPrice=vBuyPrice+(vBuyExpence/vNoUnits)+(vSellExpence/vNoUnits);
+		//AppendMessage("4: BE$ SE$");
+	}
+	return vBreakEvenPrice;
+}
+
+function ClearForm(){
+	for (var i = 0; i < document.forms[0].length; i++) {
+		// <input type="text"> 
+		if(document.forms[0].elements[i].type=="text"){
+			document.forms[0].elements[i].value="";
+		// <select> 
+		}else if(document.forms[0].elements[i].type.indexOf("select",0)>-1){
+			document.forms[0].elements[i].selectedIndex="";
+		}else if(document.forms[0].elements[i].type=="textarea"){
+			document.forms[0].elements[i].value="";
+		}else{
+			//alert(document.forms[0].elements[i].type);
+		}
+		setCookie(CookieTitle+'.'+document.forms[0].elements[i].name, "");
+	}
+}
+function CalculateProfitLossDollars(vBuyPrice, vNoUnits, vBuyExpence, bBuyIsPercentage, vSellPrice, vSellExpence, bSellIsPercentage){
+	return CalculateTotalReturn(vSellPrice, vNoUnits, vSellExpence, bSellIsPercentage)-CalculateTotalInvested(vBuyPrice, vNoUnits, vBuyExpence, bBuyIsPercentage);
+}
+function CalculateProfitLossPercentage(vBuyPrice, vNoUnits, vBuyExpence, bBuyIsPercentage, vSellPrice, vSellExpence, bSellIsPercentage){
+	var vTotalInvested=CalculateTotalInvested(vBuyPrice, vNoUnits, vBuyExpence, bBuyIsPercentage);
+	return ((CalculateTotalReturn(vSellPrice, vNoUnits, vSellExpence, bSellIsPercentage)-vTotalInvested)/vTotalInvested)*100;
+}
+
+function AppendMessage(sMessage){
+	document.getElementById("Message").innerHTML+=sMessage+"<br>"
+}
+
+/*Purpose:
+ * The object's change event occured, save the new value to a cookie.
+ */
+function tbxObject_Change(obj){
+	Calculate();
+	setCookie(CookieTitle+'.'+obj.name, obj.value);
+}
+/*Purpose:
+ * The object's change event occured, save the new value to a cookie.
+ */
+function cboObject_Change(obj){
+	Calculate();
+	setCookie(CookieTitle+'.'+obj.name, obj.selectedIndex);
+}
+/*Purpose:
+ * Get the saved state of all objects from the cookie
+ */
+function Body_Load(){
+	// Enumerate through all objects on the form, retrieving its values from the cookie 
+	for (var i = 0; i < document.forms[0].length; i++) {
+		// don't load null objects
+		if(getCookie(CookieTitle+'.'+document.forms[0].elements[i].name)!=null){
+			// <input type="text"></input><textarea></textarea>
+			if(document.forms[0].elements[i].type.indexOf("text",0)>-1){
+				document.forms[0].elements[i].value=getCookie(CookieTitle+'.'+document.forms[0].elements[i].name);
+			// <select>
+			}else if(document.forms[0].elements[i].type.indexOf("select",0)>-1){
+				document.forms[0].elements[i].selectedIndex=getCookie(CookieTitle+'.'+document.forms[0].elements[i].name);
+			}else{
+				//alert(document.forms[0].elements[i].type);
+			}
+		}
+	}
+	Calculate();
+}
+
+</script>
+</head>
+<body onLoad="Body_Load();">
+<h2 align="center">Trade Calculator</h2>
+<!-- ---------------------------------------------- Section ---------------------------------------------- -->
+<form>
+<table align="center" bgcolor="Silver" cellpadding="5" class="rollup"><tr><td>
+<table border="0" cellspacing="0" cellpadding="1">
+<tr><td class="Caption" colspan="2">Trade Description:</td></tr>
+<tr><td colspan="2"><TEXTAREA style="WIDTH: 287px;" name=tbxNotes rows=4 cols=29 onchange="tbxObject_Change(this);"></TEXTAREA><!-- <input type="text"  style="font: bold;" onChange="tbxObject_Change(this);"> --></td></tr>
+<tr><td class="Caption">Number/Amount:</td><td><input name="tbxNumberOfUnits" onChange="tbxObject_Change(this);"></td></tr>
+<tr><td class="Caption" width="50%">Buy Price (Avg) $:</td><td width="50%"><input name="tbxBuyPrice" onChange="tbxObject_Change(this);"></td></tr>
+<tr><td>
+	<SELECT onChange="javascript:cboObject_Change(this);" name="cboBuyExpenceInDollars">
+		<OPTION value="0" selected>Buy Expence $</OPTION> 
+		<OPTION value="-1">Buy Expence %</OPTION> 
+	</SELECT>: 
+</td><td><input name="tbxBuyExpences" onChange="tbxObject_Change(this);"></td></tr>
+<tr><td class="Caption">Sell Price (Avg) $:</td><td><input name="tbxSellPrice" onChange="tbxObject_Change(this);"></td></tr>
+<tr><td>
+	<SELECT onChange="javascript:cboObject_Change(this);" name="cboSellExpenceInDollars">
+		<OPTION value="0" selected>Sell Expence $</OPTION> 
+		<OPTION value="-1">Sell Expence %</OPTION>
+	</SELECT>: 
+</td><td><input name="tbxSellExpences" onChange="tbxObject_Change(this);"></td></tr>
+<tr><td class="Caption">Break Even Price $:</td><td><input id="tbxBreakEven" class="Output" name="tbxBreakEven" readonly onChange ="tbxObject_Change(this);" ></td></tr>
+<tr><td class="Caption">Total Invested $:</td><td><input id="tbxTotalInvested" class="Output" name="tbxTotalInvested" readonly onChange ="tbxObject_Change(this);"></td></tr>
+<tr><td class="Caption">Total Return $:</td><td><input id="tbxTotalReturn" class="Output" name="tbxTotalReturn" readonly onChange ="tbxObject_Change(this);"></td></tr>
+<tr><td class="Caption">Profit/Loss $:</td><td><input id="tbxProfitLossDollars" class="Output" name="tbxProfitLossDollars" readonly onChange ="tbxObject_Change(this);"></td></tr>
+<tr><td class="Caption">Profit/Loss %:</td><td><input id="tbxProfitLossPercent" class="Output" name="tbxProfitLossPercent" readonly onChange ="tbxObject_Change(this);"></td></tr><!-- <tr><td></td><td><input type="button" name="btnCalculate" value="Calculate" onClick="btnCalculate_Click();"></td></tr> -->
+<tr><td colspan="2" align="center"><input type="button" value="Calculate" onClick="javascript:Calculate();"><input type="button" value="Clear" onClick="javascript:ClearForm();"></td></tr>
+</table>
+</td></tr></table>
+</form>
+<div align="center" class="Message" id="Message"></div>
+<!-- ---------------------------------------------- Section ---------------------------------------------- -->
+<table width="70%" align="center">
+<tr><td style="BACKGROUND-COLOR: white; TEXT-ALIGN: justify">
+<P><STRONG>Usage:</STRONG></P>
+      <P>The Trade Profit/Loss Calculator uses javascript to&nbsp;perform calculations.&nbsp;It 
+      stores the results in a cookie on your computer, so that 
+      the data can be retrieved&nbsp;at your next visit. No information is 
+      collected or stored by using this.</P>
+      <P><STRONG>Disclaimer:</STRONG></P>
+      <P>Users of the Trade Profit/Loss Calculator must be advised that while 
+      it&nbsp;has been provided in good faith, it is not guaranteed to be 
+      accurate. At no time may the user be justified in infering that&nbsp;it is 
+      intended&nbsp;for use as an investment tool.&nbsp;It is advisable to 
+      consult a professional for investment advice before making any investment 
+      decision.</P>
+</td></tr>
+</table>
+<BR><!-- ---------------------------------------------- Section ---------------------------------------------- -->
+<script language="JavaScript1.2" src="./scripts/LastUpdated.js" type="text/javascript"></script>
+</body>
+</html>
